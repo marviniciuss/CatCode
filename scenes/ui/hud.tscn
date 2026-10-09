@@ -1,0 +1,420 @@
+[gd_scene load_steps=12 format=3 uid="uid://c6hudscene001"]
+
+[ext_resource type="Script" path="res://scenes/ui/hud.gd" id="1_hud"]
+[ext_resource type="PackedScene" uid="uid://b5boardscene001" path="res://scenes/board/board.tscn" id="2_board"]
+[ext_resource type="PackedScene" uid="uid://b8robotscene001" path="res://scenes/robot/robot.tscn" id="3_robot"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.875, 0.757, 0.953, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yellow_card"]
+bg_color = Color(1, 0.949, 0.722, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0, 0, 0, 0.08)
+shadow_size = 6
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_white_card"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_play_btn"]
+bg_color = Color(0.23, 0.03, 0.39, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ctrl_btn"]
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.8)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal"]
+bg_color = Color(1, 0.96, 0.88, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.23, 0.03, 0.39, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 12
+shadow_offset = Vector2(0, 8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_action_btn"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.23, 0.03, 0.39, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_board_frame"]
+bg_color = Color(0.482, 0.788, 0.549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.24, 0.52, 0.32, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0, 0, 0, 0.1)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hud")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="BackButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 20.0
+offset_top = 18.0
+offset_right = 68.0
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
+theme_override_colors/font_hover_color = Color(0.45, 0.1, 0.7, 1)
+theme_override_font_sizes/font_size = 28
+text = "←"
+flat = true
+
+[node name="WorldSide" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 40.0
+offset_right = 770.0
+offset_bottom = 680.0
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="BoardFrame" type="PanelContainer" parent="WorldSide"]
+custom_minimum_size = Vector2(580, 560)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_board_frame")
+
+[node name="BoardViewportContainer" type="SubViewportContainer" parent="WorldSide/BoardFrame"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+
+[node name="BoardSubViewport" type="SubViewport" parent="WorldSide/BoardFrame/BoardViewportContainer"]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(572, 552)
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="WorldSide/BoardFrame/BoardViewportContainer/BoardSubViewport"]
+
+[node name="Board" parent="WorldSide/BoardFrame/BoardViewportContainer/BoardSubViewport" instance=ExtResource("2_board")]
+unique_name_in_owner = true
+
+[node name="Robot" parent="WorldSide/BoardFrame/BoardViewportContainer/BoardSubViewport" instance=ExtResource("3_robot")]
+unique_name_in_owner = true
+
+[node name="MissionPromptLabel" type="Label" parent="WorldSide"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
+theme_override_font_sizes/font_size = 17
+text = "O gatinho está com fome! Ajude o robô a pegar a comida e levá-la até ele."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="YellowCard" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 800.0
+offset_top = 35.0
+offset_right = 1240.0
+offset_bottom = 645.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_yellow_card")
+
+[node name="Margin" type="MarginContainer" parent="YellowCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 18
+
+[node name="VBox" type="VBoxContainer" parent="YellowCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="InstrucoesLabel" type="Label" parent="YellowCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
+theme_override_font_sizes/font_size = 18
+text = "Instruções"
+
+[node name="PaletteGrid" type="GridContainer" parent="YellowCard/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="ProgramaLabel" type="Label" parent="YellowCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
+theme_override_font_sizes/font_size = 18
+text = "Programa"
+
+[node name="WhiteCard" type="PanelContainer" parent="YellowCard/Margin/VBox"]
+custom_minimum_size = Vector2(0, 260)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_white_card")
+
+[node name="Margin" type="MarginContainer" parent="YellowCard/Margin/VBox/WhiteCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ProgramScroll" type="ScrollContainer" parent="YellowCard/Margin/VBox/WhiteCard/Margin"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="ProgramList" type="VBoxContainer" parent="YellowCard/Margin/VBox/WhiteCard/Margin/ProgramScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="BottomControls" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 800.0
+offset_top = 652.0
+offset_right = 1240.0
+offset_bottom = 708.0
+theme_override_constants/separation = 12
+alignment = 2
+
+[node name="ClearButton" type="Button" parent="BottomControls"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_ctrl_btn")
+text = "🗑 Limpar"
+
+[node name="ResetButton" type="Button" parent="BottomControls"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_ctrl_btn")
+text = "↺ Reiniciar"
+
+[node name="SpeedButton" type="Button" parent="BottomControls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 38)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_ctrl_btn")
+text = ".2X"
+
+[node name="RunButton" type="Button" parent="BottomControls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 48)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_play_btn")
+text = "▶"
+
+[node name="VictoryModal" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.45)
+
+[node name="Card" type="PanelContainer" parent="VictoryModal"]
+custom_minimum_size = Vector2(460, 240)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -120.0
+offset_right = 230.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="Margin" type="MarginContainer" parent="VictoryModal/Card"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBox" type="VBoxContainer" parent="VictoryModal/Card/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="VictoryTitle" type="Label" parent="VictoryModal/Card/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
+theme_override_font_sizes/font_size = 24
+text = "🎉 Missão Cumprida!"
+horizontal_alignment = 1
+
+[node name="VictoryMessage" type="Label" parent="VictoryModal/Card/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
+theme_override_font_sizes/font_size = 15
+text = "O gatinho foi alimentado com sucesso!"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="VictoryModal/Card/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="RetryBtn" type="Button" parent="VictoryModal/Card/Margin/VBox/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_ctrl_btn")
+text = "Jogar Novamente"
+
+[node name="NextLevelButton" type="Button" parent="VictoryModal/Card/Margin/VBox/HBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_action_btn")
+text = "Próxima Fase →"
+
+[node name="FailureModal" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.45)
+
+[node name="Card" type="PanelContainer" parent="FailureModal"]
+custom_minimum_size = Vector2(460, 240)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -120.0
+offset_right = 230.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="Margin" type="MarginContainer" parent="FailureModal/Card"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBox" type="VBoxContainer" parent="FailureModal/Card/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Title" type="Label" parent="FailureModal/Card/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 22
+text = "💡 Dica de Depuração"
+horizontal_alignment = 1
+
+[node name="FailureReasonLabel" type="Label" parent="FailureModal/Card/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
+theme_override_font_sizes/font_size = 15
+text = "Revise a ordem dos comandos para alcançar o objetivo."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="FailureModal/Card/Margin/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="RetryBtn" type="Button" parent="FailureModal/Card/Margin/VBox/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_action_btn")
+text = "Ajustar Código"
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="BottomControls/ClearButton" to="." method="_on_clear_pressed"]
+[connection signal="pressed" from="BottomControls/ResetButton" to="." method="_on_reset_pressed"]
+[connection signal="pressed" from="BottomControls/SpeedButton" to="." method="_on_speed_pressed"]
+[connection signal="pressed" from="BottomControls/RunButton" to="." method="_on_run_pressed"]
+[connection signal="pressed" from="VictoryModal/Card/Margin/VBox/HBox/RetryBtn" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="VictoryModal/Card/Margin/VBox/HBox/NextLevelButton" to="." method="_on_next_level_pressed"]
+[connection signal="pressed" from="FailureModal/Card/Margin/VBox/HBox/RetryBtn" to="." method="_on_retry_pressed"]

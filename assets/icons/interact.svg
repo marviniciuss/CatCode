@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Cute cat paw icon -->
+  <ellipse cx="32" cy="42" rx="14" ry="11" fill="#FFFFFF"/>
+  <circle cx="17" cy="27" r="5" fill="#FFFFFF"/>
+  <circle cx="26" cy="20" r="5.5" fill="#FFFFFF"/>
+  <circle cx="38" cy="20" r="5.5" fill="#FFFFFF"/>
+  <circle cx="47" cy="27" r="5" fill="#FFFFFF"/>
+</svg>

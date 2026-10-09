@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8robotscene001"]
+
+[ext_resource type="Script" path="res://scenes/robot/robot.gd" id="1_robot"]
+[ext_resource type="Texture2D" path="res://assets/sprites/cutouts/robot_down.png" id="2_robot_down"]
+
+[node name="Robot" type="Node2D"]
+z_index = 10
+script = ExtResource("1_robot")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_robot_down")
+
+[node name="ItemBadge" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(40, -45)
+scale = Vector2(0.28, 0.28)

@@ -1,0 +1,181 @@
+[gd_scene format=3 uid="uid://dt3pm1jcry0to"]
+
+[ext_resource type="Script" uid="uid://nthewpf6dnlu" path="res://scenes/menus/level_select.gd" id="1_lvl_select"]
+[ext_resource type="Texture2D" uid="uid://464g2fegsl6n" path="res://assets/sprites/ui/mia_miau.png" id="2_mia"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(1, 0.949, 0.722, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lvl_btn"]
+bg_color = Color(0.85, 0.73, 0.93, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.23, 0.03, 0.39, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0, 0, 0, 0.08)
+shadow_size = 4
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lvl_btn_locked"]
+bg_color = Color(0.85, 0.73, 0.93, 0.6)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.2, 0.5, 0.4)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[node name="LevelSelect" type="Control" unique_id=506729867]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lvl_select")
+
+[node name="Background" type="Panel" parent="." unique_id=1487447225]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="BackButton" type="Button" parent="." unique_id=442951894]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 72.0
+offset_bottom = 68.0
+theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
+theme_override_font_sizes/font_size = 32
+text = "←"
+flat = true
+
+[node name="LevelsGrid" type="GridContainer" parent="." unique_id=924870484]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -380.0
+offset_top = -180.0
+offset_right = 380.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 30
+columns = 5
+
+[node name="Btn1" type="Button" parent="LevelsGrid" unique_id=42662612]
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_lvl_btn")
+text = "1"
+
+[node name="Btn2" type="Button" parent="LevelsGrid" unique_id=1993787090]
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_lvl_btn")
+text = "2"
+
+[node name="Btn3" type="Button" parent="LevelsGrid" unique_id=2011632839]
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_lvl_btn")
+text = "3"
+
+[node name="Btn4" type="Button" parent="LevelsGrid" unique_id=1493686403]
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.15, 0.4, 0.8)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_lvl_btn_locked")
+text = "4"
+
+[node name="Btn5" type="Button" parent="LevelsGrid" unique_id=1331915850]
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.15, 0.4, 0.8)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_lvl_btn_locked")
+text = "5"
+
+[node name="Btn6" type="Button" parent="LevelsGrid" unique_id=1195484662]
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.15, 0.4, 0.8)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_lvl_btn_locked")
+text = "6"
+
+[node name="Btn7" type="Button" parent="LevelsGrid" unique_id=159055612]
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.15, 0.4, 0.8)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_lvl_btn_locked")
+text = "7"
+
+[node name="Btn8" type="Button" parent="LevelsGrid" unique_id=531590373]
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.15, 0.4, 0.8)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_lvl_btn_locked")
+text = "8"
+
+[node name="Btn9" type="Button" parent="LevelsGrid" unique_id=2009174585]
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.15, 0.4, 0.8)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_lvl_btn_locked")
+text = "9"
+
+[node name="Btn10" type="Button" parent="LevelsGrid" unique_id=1709508345]
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.15, 0.4, 0.8)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_lvl_btn_locked")
+text = "10"
+
+[node name="MiaMiau" type="TextureRect" parent="." unique_id=1211083610]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -370.0
+offset_top = -261.0
+offset_right = -20.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("2_mia")
+expand_mode = 1
+stretch_mode = 5
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_pressed"]

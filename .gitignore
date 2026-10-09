@@ -1,0 +1,22 @@
+# Godot 4+ specific ignores
+.godot/
+
+# Imported translations
+*.translation
+
+# Temporary and backup files
+*.tmp
+*.swp
+*~
+Thumbs.db
+.DS_Store
+
+# Export builds (binários gerados)
+builds/
+exports/
+dist/
+*.exe
+*.apk
+*.aab
+*.html
+*.zip

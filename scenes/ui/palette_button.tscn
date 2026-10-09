@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://palbtn001"]
+
+[ext_resource type="Script" path="res://scenes/ui/palette_button.gd" id="1_palette"]
+
+[node name="PaletteButton" type="Button"]
+custom_minimum_size = Vector2(0, 42)
+offset_right = 160.0
+offset_bottom = 42.0
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 14
+text = "  Mover Frente"
+alignment = 0
+script = ExtResource("1_palette")
