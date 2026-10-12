@@ -1,32 +1,32 @@
-[gd_scene load_steps=2 format=3 uid="uid://ci1cmditem001"]
+[gd_scene format=3 uid="uid://ci1cmditem001"]
 
-[ext_resource type="Script" path="res://scenes/ui/command_item.gd" id="1_cmd_item"]
+[ext_resource type="Script" uid="uid://7idjfqx6ow7s" path="res://scenes/ui/command_item.gd" id="1_cmd_item"]
 
-[node name="CommandItem" type="PanelContainer"]
+[node name="CommandItem" type="PanelContainer" unique_id=822144358]
 custom_minimum_size = Vector2(0, 32)
 offset_right = 260.0
 offset_bottom = 32.0
 size_flags_horizontal = 3
 script = ExtResource("1_cmd_item")
 
-[node name="HighlightBorder" type="ColorRect" parent="."]
+[node name="HighlightBorder" type="ColorRect" parent="." unique_id=741683156]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 color = Color(1, 1, 0.4, 0.45)
 
-[node name="HBox" type="HBoxContainer" parent="."]
+[node name="HBox" type="HBoxContainer" parent="." unique_id=1409437697]
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="IndexLabel" type="Label" parent="HBox"]
+[node name="IndexLabel" type="Label" parent="HBox" unique_id=1211246839]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.85)
 theme_override_font_sizes/font_size = 12
 text = "1."
 
-[node name="TitleLabel" type="Label" parent="HBox"]
+[node name="TitleLabel" type="Label" parent="HBox" unique_id=861125937]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -35,7 +35,7 @@ theme_override_font_sizes/font_size = 13
 text = "ANDAR"
 clip_text = true
 
-[node name="DeleteButton" type="Button" parent="HBox"]
+[node name="DeleteButton" type="Button" parent="HBox" unique_id=495742564]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2

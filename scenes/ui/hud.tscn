@@ -1,11 +1,26 @@
-[gd_scene load_steps=12 format=3 uid="uid://c6hudscene001"]
+[gd_scene format=3 uid="uid://c6hudscene001"]
 
-[ext_resource type="Script" path="res://scenes/ui/hud.gd" id="1_hud"]
-[ext_resource type="PackedScene" uid="uid://b5boardscene001" path="res://scenes/board/board.tscn" id="2_board"]
-[ext_resource type="PackedScene" uid="uid://b8robotscene001" path="res://scenes/robot/robot.tscn" id="3_robot"]
+[ext_resource type="Script" uid="uid://cmwr7gv44ofa5" path="res://scenes/ui/hud.gd" id="1_hud"]
+[ext_resource type="PackedScene" uid="uid://bplr80tkokaei" path="res://scenes/board/board.tscn" id="2_board"]
+[ext_resource type="PackedScene" uid="uid://drel1b80qh0nk" path="res://scenes/robot/robot.tscn" id="3_robot"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
 bg_color = Color(0.875, 0.757, 0.953, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_board_frame"]
+bg_color = Color(0.482, 0.788, 0.549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.24, 0.52, 0.32, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0, 0, 0, 0.1)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yellow_card"]
 bg_color = Color(1, 0.949, 0.722, 1)
@@ -24,13 +39,6 @@ corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_play_btn"]
-bg_color = Color(0.23, 0.03, 0.39, 1)
-corner_radius_top_left = 24
-corner_radius_top_right = 24
-corner_radius_bottom_right = 24
-corner_radius_bottom_left = 24
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ctrl_btn"]
 content_margin_left = 8.0
 content_margin_top = 4.0
@@ -41,6 +49,13 @@ corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_play_btn"]
+bg_color = Color(0.23, 0.03, 0.39, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal"]
 bg_color = Color(1, 0.96, 0.88, 1)
@@ -68,22 +83,7 @@ corner_radius_top_right = 14
 corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_board_frame"]
-bg_color = Color(0.482, 0.788, 0.549, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.24, 0.52, 0.32, 1)
-corner_radius_top_left = 24
-corner_radius_top_right = 24
-corner_radius_bottom_right = 24
-corner_radius_bottom_left = 24
-shadow_color = Color(0, 0, 0, 0.1)
-shadow_size = 8
-shadow_offset = Vector2(0, 4)
-
-[node name="HUD" type="Control"]
+[node name="HUD" type="Control" unique_id=2016432048]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -92,7 +92,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hud")
 
-[node name="Background" type="Panel" parent="."]
+[node name="Background" type="Panel" parent="." unique_id=158315906]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -101,7 +101,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
 
-[node name="BackButton" type="Button" parent="."]
+[node name="BackButton" type="Button" parent="." unique_id=2000113298]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 20.0
@@ -114,7 +114,7 @@ theme_override_font_sizes/font_size = 28
 text = "←"
 flat = true
 
-[node name="WorldSide" type="VBoxContainer" parent="."]
+[node name="WorldSide" type="VBoxContainer" parent="." unique_id=1037954132]
 layout_mode = 0
 offset_left = 68.0
 offset_top = 40.0
@@ -123,35 +123,35 @@ offset_bottom = 680.0
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="BoardFrame" type="PanelContainer" parent="WorldSide"]
+[node name="BoardFrame" type="PanelContainer" parent="WorldSide" unique_id=983652788]
 custom_minimum_size = Vector2(580, 560)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_board_frame")
 
-[node name="BoardViewportContainer" type="SubViewportContainer" parent="WorldSide/BoardFrame"]
+[node name="BoardViewportContainer" type="SubViewportContainer" parent="WorldSide/BoardFrame" unique_id=1192329357]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 stretch = true
 
-[node name="BoardSubViewport" type="SubViewport" parent="WorldSide/BoardFrame/BoardViewportContainer"]
+[node name="BoardSubViewport" type="SubViewport" parent="WorldSide/BoardFrame/BoardViewportContainer" unique_id=1117881704]
 disable_3d = true
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(572, 552)
+size = Vector2i(572, 592)
 render_target_update_mode = 4
 
-[node name="Camera2D" type="Camera2D" parent="WorldSide/BoardFrame/BoardViewportContainer/BoardSubViewport"]
+[node name="Camera2D" type="Camera2D" parent="WorldSide/BoardFrame/BoardViewportContainer/BoardSubViewport" unique_id=410522218]
 
-[node name="Board" parent="WorldSide/BoardFrame/BoardViewportContainer/BoardSubViewport" instance=ExtResource("2_board")]
+[node name="Board" parent="WorldSide/BoardFrame/BoardViewportContainer/BoardSubViewport" unique_id=768054815 instance=ExtResource("2_board")]
 unique_name_in_owner = true
 
-[node name="Robot" parent="WorldSide/BoardFrame/BoardViewportContainer/BoardSubViewport" instance=ExtResource("3_robot")]
+[node name="Robot" parent="WorldSide/BoardFrame/BoardViewportContainer/BoardSubViewport" unique_id=671586014 instance=ExtResource("3_robot")]
 unique_name_in_owner = true
 
-[node name="MissionPromptLabel" type="Label" parent="WorldSide"]
+[node name="MissionPromptLabel" type="Label" parent="WorldSide" unique_id=211845523]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
@@ -160,7 +160,7 @@ text = "O gatinho está com fome! Ajude o robô a pegar a comida e levá-la até
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="YellowCard" type="PanelContainer" parent="."]
+[node name="YellowCard" type="PanelContainer" parent="." unique_id=387481010]
 layout_mode = 0
 offset_left = 800.0
 offset_top = 35.0
@@ -168,61 +168,61 @@ offset_right = 1240.0
 offset_bottom = 645.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_yellow_card")
 
-[node name="Margin" type="MarginContainer" parent="YellowCard"]
+[node name="Margin" type="MarginContainer" parent="YellowCard" unique_id=263958496]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 18
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 18
 
-[node name="VBox" type="VBoxContainer" parent="YellowCard/Margin"]
+[node name="VBox" type="VBoxContainer" parent="YellowCard/Margin" unique_id=1608949382]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="InstrucoesLabel" type="Label" parent="YellowCard/Margin/VBox"]
+[node name="InstrucoesLabel" type="Label" parent="YellowCard/Margin/VBox" unique_id=1791877398]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
 theme_override_font_sizes/font_size = 18
 text = "Instruções"
 
-[node name="PaletteGrid" type="GridContainer" parent="YellowCard/Margin/VBox"]
+[node name="PaletteGrid" type="GridContainer" parent="YellowCard/Margin/VBox" unique_id=180676734]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 8
 columns = 2
 
-[node name="ProgramaLabel" type="Label" parent="YellowCard/Margin/VBox"]
+[node name="ProgramaLabel" type="Label" parent="YellowCard/Margin/VBox" unique_id=1318337531]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
 theme_override_font_sizes/font_size = 18
 text = "Programa"
 
-[node name="WhiteCard" type="PanelContainer" parent="YellowCard/Margin/VBox"]
+[node name="WhiteCard" type="PanelContainer" parent="YellowCard/Margin/VBox" unique_id=2100358822]
 custom_minimum_size = Vector2(0, 260)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_white_card")
 
-[node name="Margin" type="MarginContainer" parent="YellowCard/Margin/VBox/WhiteCard"]
+[node name="Margin" type="MarginContainer" parent="YellowCard/Margin/VBox/WhiteCard" unique_id=916961878]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="ProgramScroll" type="ScrollContainer" parent="YellowCard/Margin/VBox/WhiteCard/Margin"]
+[node name="ProgramScroll" type="ScrollContainer" parent="YellowCard/Margin/VBox/WhiteCard/Margin" unique_id=62377096]
 unique_name_in_owner = true
 layout_mode = 2
 horizontal_scroll_mode = 0
 
-[node name="ProgramList" type="VBoxContainer" parent="YellowCard/Margin/VBox/WhiteCard/Margin/ProgramScroll"]
+[node name="ProgramList" type="VBoxContainer" parent="YellowCard/Margin/VBox/WhiteCard/Margin/ProgramScroll" unique_id=1770415848]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 6
 
-[node name="BottomControls" type="HBoxContainer" parent="."]
+[node name="BottomControls" type="HBoxContainer" parent="." unique_id=462246718]
 layout_mode = 0
 offset_left = 800.0
 offset_top = 652.0
@@ -231,7 +231,7 @@ offset_bottom = 708.0
 theme_override_constants/separation = 12
 alignment = 2
 
-[node name="ClearButton" type="Button" parent="BottomControls"]
+[node name="ClearButton" type="Button" parent="BottomControls" unique_id=1267809349]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
@@ -240,7 +240,7 @@ theme_override_font_sizes/font_size = 13
 theme_override_styles/normal = SubResource("StyleBoxFlat_ctrl_btn")
 text = "🗑 Limpar"
 
-[node name="ResetButton" type="Button" parent="BottomControls"]
+[node name="ResetButton" type="Button" parent="BottomControls" unique_id=1334795521]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
@@ -249,7 +249,7 @@ theme_override_font_sizes/font_size = 13
 theme_override_styles/normal = SubResource("StyleBoxFlat_ctrl_btn")
 text = "↺ Reiniciar"
 
-[node name="SpeedButton" type="Button" parent="BottomControls"]
+[node name="SpeedButton" type="Button" parent="BottomControls" unique_id=1129269745]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(48, 38)
 layout_mode = 2
@@ -259,7 +259,7 @@ theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_ctrl_btn")
 text = ".2X"
 
-[node name="RunButton" type="Button" parent="BottomControls"]
+[node name="RunButton" type="Button" parent="BottomControls" unique_id=4141379]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 48)
 layout_mode = 2
@@ -269,7 +269,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_play_btn")
 text = "▶"
 
-[node name="VictoryModal" type="ColorRect" parent="."]
+[node name="VictoryModal" type="ColorRect" parent="." unique_id=839793701]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -280,7 +280,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.45)
 
-[node name="Card" type="PanelContainer" parent="VictoryModal"]
+[node name="Card" type="PanelContainer" parent="VictoryModal" unique_id=1552306719]
 custom_minimum_size = Vector2(460, 240)
 layout_mode = 1
 anchors_preset = 8
@@ -296,19 +296,19 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
 
-[node name="Margin" type="MarginContainer" parent="VictoryModal/Card"]
+[node name="Margin" type="MarginContainer" parent="VictoryModal/Card" unique_id=1093081755]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 24
 
-[node name="VBox" type="VBoxContainer" parent="VictoryModal/Card/Margin"]
+[node name="VBox" type="VBoxContainer" parent="VictoryModal/Card/Margin" unique_id=1986525893]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="VictoryTitle" type="Label" parent="VictoryModal/Card/Margin/VBox"]
+[node name="VictoryTitle" type="Label" parent="VictoryModal/Card/Margin/VBox" unique_id=1287377242]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
@@ -316,7 +316,7 @@ theme_override_font_sizes/font_size = 24
 text = "🎉 Missão Cumprida!"
 horizontal_alignment = 1
 
-[node name="VictoryMessage" type="Label" parent="VictoryModal/Card/Margin/VBox"]
+[node name="VictoryMessage" type="Label" parent="VictoryModal/Card/Margin/VBox" unique_id=1981500641]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
@@ -325,18 +325,18 @@ text = "O gatinho foi alimentado com sucesso!"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="HBox" type="HBoxContainer" parent="VictoryModal/Card/Margin/VBox"]
+[node name="HBox" type="HBoxContainer" parent="VictoryModal/Card/Margin/VBox" unique_id=905546984]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="RetryBtn" type="Button" parent="VictoryModal/Card/Margin/VBox/HBox"]
+[node name="RetryBtn" type="Button" parent="VictoryModal/Card/Margin/VBox/HBox" unique_id=531745551]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_ctrl_btn")
 text = "Jogar Novamente"
 
-[node name="NextLevelButton" type="Button" parent="VictoryModal/Card/Margin/VBox/HBox"]
+[node name="NextLevelButton" type="Button" parent="VictoryModal/Card/Margin/VBox/HBox" unique_id=2127620383]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -344,7 +344,7 @@ theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_action_btn")
 text = "Próxima Fase →"
 
-[node name="FailureModal" type="ColorRect" parent="."]
+[node name="FailureModal" type="ColorRect" parent="." unique_id=1561485181]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -355,7 +355,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.45)
 
-[node name="Card" type="PanelContainer" parent="FailureModal"]
+[node name="Card" type="PanelContainer" parent="FailureModal" unique_id=42416715]
 custom_minimum_size = Vector2(460, 240)
 layout_mode = 1
 anchors_preset = 8
@@ -371,26 +371,26 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
 
-[node name="Margin" type="MarginContainer" parent="FailureModal/Card"]
+[node name="Margin" type="MarginContainer" parent="FailureModal/Card" unique_id=789774340]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 24
 
-[node name="VBox" type="VBoxContainer" parent="FailureModal/Card/Margin"]
+[node name="VBox" type="VBoxContainer" parent="FailureModal/Card/Margin" unique_id=1452732484]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="Title" type="Label" parent="FailureModal/Card/Margin/VBox"]
+[node name="Title" type="Label" parent="FailureModal/Card/Margin/VBox" unique_id=749315750]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.2, 0.2, 1)
 theme_override_font_sizes/font_size = 22
 text = "💡 Dica de Depuração"
 horizontal_alignment = 1
 
-[node name="FailureReasonLabel" type="Label" parent="FailureModal/Card/Margin/VBox"]
+[node name="FailureReasonLabel" type="Label" parent="FailureModal/Card/Margin/VBox" unique_id=730284787]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
@@ -399,11 +399,11 @@ text = "Revise a ordem dos comandos para alcançar o objetivo."
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="HBox" type="HBoxContainer" parent="FailureModal/Card/Margin/VBox"]
+[node name="HBox" type="HBoxContainer" parent="FailureModal/Card/Margin/VBox" unique_id=1738745885]
 layout_mode = 2
 alignment = 1
 
-[node name="RetryBtn" type="Button" parent="FailureModal/Card/Margin/VBox/HBox"]
+[node name="RetryBtn" type="Button" parent="FailureModal/Card/Margin/VBox/HBox" unique_id=1173845750]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 16

@@ -1,14 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://b2startmenu001"]
+[gd_scene format=3 uid="uid://dto7wytl6tvnk"]
 
-[ext_resource type="Script" path="res://scenes/menus/start_menu.gd" id="1_start_menu"]
-[ext_resource type="Texture2D" path="res://assets/sprites/menu_iniciar.png" id="2_bg"]
+[ext_resource type="Script" uid="uid://dahfspbrn5c6a" path="res://scenes/menus/start_menu.gd" id="1_start_menu"]
+[ext_resource type="Texture2D" uid="uid://b58gd5kir2x0k" path="res://assets/sprites/menu_iniciar.png" id="2_bg"]
+[ext_resource type="FontFile" uid="uid://4t82h7ktswr2" path="res://assets/fonts/Nunito-ExtraBold.ttf" id="3_ifl8t"]
+[ext_resource type="Texture2D" uid="uid://dtj61ec44iu5" path="res://assets/sprites/icone_logo.png" id="3_mxv33"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
 bg_color = Color(0.85, 0.73, 0.93, 0.95)
 corner_radius_top_left = 24
 corner_radius_top_right = 24
-corner_radius_bottom_left = 24
 corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
 shadow_color = Color(0, 0, 0, 0.1)
 shadow_size = 4
 shadow_offset = Vector2(0, 3)
@@ -17,8 +19,8 @@ shadow_offset = Vector2(0, 3)
 bg_color = Color(0.92, 0.82, 0.98, 1)
 corner_radius_top_left = 24
 corner_radius_top_right = 24
-corner_radius_bottom_left = 24
 corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
 shadow_color = Color(0, 0, 0, 0.15)
 shadow_size = 6
 shadow_offset = Vector2(0, 4)
@@ -32,12 +34,12 @@ border_width_bottom = 4
 border_color = Color(0.23, 0.03, 0.39, 1)
 corner_radius_top_left = 20
 corner_radius_top_right = 20
-corner_radius_bottom_left = 20
 corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 shadow_color = Color(0, 0, 0, 0.3)
 shadow_size = 12
 
-[node name="StartMenu" type="Control"]
+[node name="StartMenu" type="Control" unique_id=1364051386]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,7 +48,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_start_menu")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=1704878628]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -57,45 +59,52 @@ texture = ExtResource("2_bg")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="ButtonsContainer" type="VBoxContainer" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="Background" unique_id=1377024086]
+position = Vector2(640, 172)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("3_mxv33")
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="." unique_id=285863203]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.51100004
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -140.0
-offset_top = -20.0
-offset_right = 140.0
-offset_bottom = 140.0
+anchor_bottom = 0.51100004
+offset_left = -137.0
+offset_top = -67.92001
+offset_right = 143.0
+offset_bottom = 128.07999
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 18
 alignment = 1
 
-[node name="StartButton" type="Button" parent="ButtonsContainer"]
+[node name="StartButton" type="Button" parent="ButtonsContainer" unique_id=1178767032]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(280, 56)
+custom_minimum_size = Vector2(280, 80)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
 theme_override_colors/font_hover_color = Color(0.35, 0.05, 0.55, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_fonts/font = ExtResource("3_ifl8t")
+theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "INICIAR"
 
-[node name="HowToPlayButton" type="Button" parent="ButtonsContainer"]
+[node name="HowToPlayButton" type="Button" parent="ButtonsContainer" unique_id=1454762106]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(280, 56)
+custom_minimum_size = Vector2(280, 80)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
 theme_override_colors/font_hover_color = Color(0.35, 0.05, 0.55, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_fonts/font = ExtResource("3_ifl8t")
+theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "COMO JOGAR?"
 
-[node name="HowToPlayModal" type="ColorRect" parent="."]
+[node name="HowToPlayModal" type="ColorRect" parent="." unique_id=813665947]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -106,7 +115,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.5)
 
-[node name="Card" type="PanelContainer" parent="HowToPlayModal"]
+[node name="Card" type="PanelContainer" parent="HowToPlayModal" unique_id=1792385325]
 custom_minimum_size = Vector2(520, 360)
 layout_mode = 1
 anchors_preset = 8
@@ -122,25 +131,25 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
 
-[node name="Margin" type="MarginContainer" parent="HowToPlayModal/Card"]
+[node name="Margin" type="MarginContainer" parent="HowToPlayModal/Card" unique_id=662538076]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 24
 
-[node name="VBox" type="VBoxContainer" parent="HowToPlayModal/Card/Margin"]
+[node name="VBox" type="VBoxContainer" parent="HowToPlayModal/Card/Margin" unique_id=1459404980]
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="Title" type="Label" parent="HowToPlayModal/Card/Margin/VBox"]
+[node name="Title" type="Label" parent="HowToPlayModal/Card/Margin/VBox" unique_id=1967447016]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
 theme_override_font_sizes/font_size = 22
 text = "🐾 Como Jogar o CatCode"
 horizontal_alignment = 1
 
-[node name="Instructions" type="Label" parent="HowToPlayModal/Card/Margin/VBox"]
+[node name="Instructions" type="Label" parent="HowToPlayModal/Card/Margin/VBox" unique_id=565850270]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.2, 0.1, 0.3, 1)
 theme_override_font_sizes/font_size = 14
@@ -152,7 +161,7 @@ text = "1. Você programa as ações do robô assistente do abrigo.
 6. Pressione o botão ▶ para ver o robô executar o algoritmo."
 autowrap_mode = 2
 
-[node name="CloseHelpButton" type="Button" parent="HowToPlayModal/Card/Margin/VBox"]
+[node name="CloseHelpButton" type="Button" parent="HowToPlayModal/Card/Margin/VBox" unique_id=662874330]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 42)
 layout_mode = 2
