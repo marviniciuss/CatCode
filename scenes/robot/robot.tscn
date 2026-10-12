@@ -1,16 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://b8robotscene001"]
+[gd_scene format=3 uid="uid://drel1b80qh0nk"]
 
-[ext_resource type="Script" path="res://scenes/robot/robot.gd" id="1_robot"]
-[ext_resource type="Texture2D" path="res://assets/sprites/cutouts/robot_down.png" id="2_robot_down"]
+[ext_resource type="Script" uid="uid://dqvf5i30v7flf" path="res://scenes/robot/robot.gd" id="1_robot"]
+[ext_resource type="Texture2D" uid="uid://cy34m3mg5hedk" path="res://assets/sprites/cutouts/robot_down.png" id="2_robot_down"]
 
-[node name="Robot" type="Node2D"]
+[node name="Robot" type="Node2D" unique_id=391650841]
 z_index = 10
 script = ExtResource("1_robot")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1624910866]
 texture = ExtResource("2_robot_down")
 
-[node name="ItemBadge" type="Sprite2D" parent="."]
+[node name="ItemBadge" type="Sprite2D" parent="." unique_id=1163704655]
 visible = false
 position = Vector2(40, -45)
 scale = Vector2(0.28, 0.28)
