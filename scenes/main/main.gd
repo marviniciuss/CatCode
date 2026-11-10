@@ -17,7 +17,8 @@ var execution_speed: float = 1.0
 func _ready() -> void:
 	_connect_hud_signals()
 	levels = LevelData.get_default_levels()
-	load_level(0)
+	var start_index = clampi(LevelData.selected_level_index, 0, levels.size() - 1)
+	load_level(start_index)
 
 func _connect_hud_signals() -> void:
 	hud.command_added.connect(_on_command_added)
@@ -35,6 +36,7 @@ func load_level(index: int) -> void:
 		return
 		
 	current_level_index = index
+	LevelData.selected_level_index = index
 	var current_level = levels[current_level_index]
 	
 	program_commands.clear()
@@ -146,6 +148,7 @@ func _execute_program() -> void:
 		
 	# Avaliar condição final da missão
 	if board.is_animal_fed:
+		LevelData.unlock_next_level(current_level_index)
 		var is_last = (current_level_index >= levels.size() - 1)
 		hud.show_victory(program_commands.size(), is_last)
 	elif not robot.is_carrying_item and board.has_food:

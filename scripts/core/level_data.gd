@@ -1,6 +1,15 @@
 class_name LevelData
 extends Resource
 
+static var selected_level_index: int = 0
+static var max_unlocked_level: int = 1
+
+static func unlock_next_level(completed_level_index: int) -> void:
+	var total_levels = get_default_levels().size()
+	var next_level_num = completed_level_index + 2
+	if next_level_num <= total_levels and next_level_num > max_unlocked_level:
+		max_unlocked_level = next_level_num
+
 @export var level_id: String = "c1_l1"
 @export var level_number: int = 1
 @export var scenario_name: String = "Cenário 1 — Alimentação"
