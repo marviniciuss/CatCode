@@ -150,7 +150,7 @@ func is_valid_cell(pos: Vector2i) -> bool:
 	return pos.x >= 0 and pos.x < grid_width and pos.y >= 0 and pos.y < grid_height
 
 func is_obstacle(pos: Vector2i) -> bool:
-	return pos in obstacles
+	return pos in obstacles or decorative_tiles.has(pos)
 
 func remove_food() -> void:
 	has_food = false

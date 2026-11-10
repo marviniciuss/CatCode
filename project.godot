@@ -14,7 +14,7 @@ config/name="CatCode: Aventura Lógica"
 config/description="Jogo educativo de lógica de programação com temática de proteção animal - GABA UECE"
 config/version="2.0.0"
 run/main_scene="res://scenes/menus/start_menu.tscn"
-config/features=PackedStringArray("4.6", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [display]
