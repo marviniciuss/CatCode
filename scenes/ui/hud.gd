@@ -3,6 +3,7 @@ extends Control
 
 signal command_added(cmd: String)
 signal command_removed(index: int)
+signal loop_count_changed(index: int, new_count: int)
 signal program_cleared
 signal run_requested
 signal reset_requested
@@ -35,6 +36,8 @@ const COMMAND_ITEM_SCENE = preload("res://scenes/ui/command_item.tscn")
 const PALETTE_BUTTON_SCENE = preload("res://scenes/ui/palette_button.tscn")
 
 var _command_items: Array[CommandItem] = []
+var _allowed_commands: Array = []
+var _loop_palette_btn: PaletteButton = null
 var _is_running: bool = false
 var _max_commands: int = 24
 var _current_speed_index: int = 1
@@ -50,6 +53,8 @@ func setup_level(data: LevelData) -> void:
 	set_running_state(false)
 
 func setup_palette(allowed_commands: Array) -> void:
+	_allowed_commands = allowed_commands.duplicate()
+	_loop_palette_btn = null
 	for child in palette_grid.get_children():
 		child.queue_free()
 		
@@ -67,6 +72,8 @@ func setup_palette(allowed_commands: Array) -> void:
 		var btn = PALETTE_BUTTON_SCENE.instantiate() as PaletteButton
 		palette_grid.add_child(btn)
 		btn.setup(str(cmd))
+		if cmd == CommandTypes.LOOP:
+			_loop_palette_btn = btn
 		
 		# Desabilita se o comando não estiver liberado na fase
 		if not allowed_commands.has(cmd):
@@ -79,28 +86,61 @@ func update_program_display(commands: Array) -> void:
 	_command_items.clear()
 	for child in program_list.get_children():
 		child.queue_free()
-		
+	
+	var open_loop_index: int = -1
 	for i in range(commands.size()):
+		var c = str(commands[i])
+		if CommandTypes.is_loop_start(c):
+			open_loop_index = i
+		elif c == CommandTypes.LOOP_END:
+			open_loop_index = -1
+	
+	var in_loop: bool = false
+	for i in range(commands.size()):
+		var cmd_str = str(commands[i])
 		var item = COMMAND_ITEM_SCENE.instantiate() as CommandItem
 		program_list.add_child(item)
-		item.setup(i, str(commands[i]))
+		
+		if CommandTypes.is_loop_start(cmd_str):
+			var is_open = (i == open_loop_index)
+			item.setup(i, cmd_str, 0, is_open)
+			in_loop = true
+		elif cmd_str == CommandTypes.LOOP_END:
+			in_loop = false
+			item.setup(i, cmd_str, 0, false)
+		else:
+			item.setup(i, cmd_str, 1 if in_loop else 0, false)
+		
 		item.delete_requested.connect(_on_item_delete_requested)
+		item.loop_count_changed.connect(_on_item_loop_count_changed)
+		item.close_loop_requested.connect(_on_close_loop_requested)
 		_command_items.append(item)
+	
+	if _loop_palette_btn and _allowed_commands.has(CommandTypes.LOOP):
+		if open_loop_index != -1:
+			_loop_palette_btn.text = "✓ FIM REPETIR"
+		else:
+			_loop_palette_btn.text = CommandTypes.get_title(CommandTypes.LOOP)
 		
 	# Rolar automaticamente para o final
 	await get_tree().process_frame
 	if program_scroll:
 		program_scroll.scroll_vertical = int(program_scroll.get_v_scroll_bar().max_value)
 
-func highlight_command(index: int) -> void:
+func highlight_command(index: int, active_loop_index: int = -1, current_iter: int = 0, total_iters: int = 0) -> void:
 	for i in range(_command_items.size()):
 		if is_instance_valid(_command_items[i]):
-			_command_items[i].set_highlight(i == index)
+			_command_items[i].set_highlight(i == index or i == active_loop_index)
+			if i == active_loop_index:
+				_command_items[i].set_loop_progress(current_iter, total_iters)
+			else:
+				_command_items[i].set_loop_progress(0, 0)
 
 func clear_highlights() -> void:
 	for item in _command_items:
 		if is_instance_valid(item):
 			item.set_highlight(false)
+			item.set_loop_progress(0, 0)
 
 func set_running_state(running: bool) -> void:
 	_is_running = running
@@ -108,14 +148,15 @@ func set_running_state(running: bool) -> void:
 	clear_button.disabled = running
 	
 	for child in palette_grid.get_children():
-		if child is Button:
+		if child is PaletteButton:
+			var allowed = _allowed_commands.has(child.command_type)
+			child.disabled = running or (not allowed)
+		elif child is Button:
 			child.disabled = running
 			
 	for item in _command_items:
 		if is_instance_valid(item):
-			var del_btn = item.get_node_or_null("%DeleteButton")
-			if del_btn:
-				del_btn.disabled = running
+			item.set_controls_disabled(running)
 
 func show_victory(step_count: int, is_last_level: bool = false) -> void:
 	victory_modal.visible = true
@@ -156,6 +197,14 @@ func _on_palette_command_selected(cmd: String) -> void:
 func _on_item_delete_requested(index: int) -> void:
 	if not _is_running:
 		command_removed.emit(index)
+
+func _on_item_loop_count_changed(index: int, new_count: int) -> void:
+	if not _is_running:
+		loop_count_changed.emit(index, new_count)
+
+func _on_close_loop_requested() -> void:
+	if not _is_running:
+		command_added.emit(CommandTypes.LOOP)
 
 func _on_run_pressed() -> void:
 	run_requested.emit()

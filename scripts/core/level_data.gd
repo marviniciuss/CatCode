@@ -135,4 +135,40 @@ static func get_default_levels() -> Array[LevelData]:
 	l3.max_commands = 30
 	levels.append(l3)
 
+	# --- FASE 4: Cenário 2 (Exploração - Introdução ao Bloco REPETIR) ---
+	var l4 = LevelData.new()
+	l4.level_id = "c2_l1"
+	l4.level_number = 4
+	l4.scenario_name = "Cenário 2 — Exploração com Laços"
+	l4.target_animal_name = "Bento"
+	l4.difficulty = "Médio"
+	l4.title = "Fase 4: O Atalho Repetitivo"
+	l4.mission_text = "Use o novo bloco REPETIR para economizar comandos! Pegue a ração no corredor e desça até o Bento."
+	l4.grid_width = 6
+	l4.grid_height = 6
+	l4.robot_start_pos = Vector2i(0, 0)
+	l4.robot_start_dir = Vector2i(1, 0) # Direita
+	l4.food_pos = Vector2i(4, 0)
+	l4.animal_pos = Vector2i(1, 3)
+	l4.obstacles = [
+		Vector2i(0, 1),
+		Vector2i(1, 1),
+		Vector2i(2, 1),
+		Vector2i(5, 2)
+	]
+	l4.decorative_tiles = {
+		Vector2i(3, 3): "stone",
+		Vector2i(4, 3): "stone"
+	}
+	l4.allowed_commands = [
+		CommandTypes.MOVE_FORWARD,
+		CommandTypes.TURN_LEFT,
+		CommandTypes.TURN_RIGHT,
+		CommandTypes.COLLECT,
+		CommandTypes.LOOP,
+		CommandTypes.FEED
+	]
+	l4.max_commands = 20
+	levels.append(l4)
+
 	return levels
