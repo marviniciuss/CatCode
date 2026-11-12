@@ -8,6 +8,7 @@ extends Control
 
 func _ready() -> void:
 	UISounds.register_buttons(self)
+	AudioManager.play_theme_music()
 	if how_to_play_modal:
 		how_to_play_modal.visible = false
 

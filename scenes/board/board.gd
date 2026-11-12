@@ -32,6 +32,7 @@ signal animal_fed
 
 var food_pos: Vector2i = Vector2i(4, 1)
 var animal_pos: Vector2i = Vector2i(5, 4)
+var target_animal_name: String = "Mia"
 var obstacles: Array = [Vector2i(2, 2)]
 var decorative_tiles: Dictionary = { Vector2i(4, 4): "stone" }
 
@@ -55,6 +56,7 @@ func setup_level(data: LevelData) -> void:
 	grid_height = data.grid_height
 	food_pos = data.food_pos
 	animal_pos = data.animal_pos
+	target_animal_name = data.target_animal_name
 	obstacles = data.obstacles.duplicate()
 	decorative_tiles = data.decorative_tiles.duplicate()
 	
@@ -131,7 +133,7 @@ func build_grid() -> void:
 		animal_entity = CAT_TARGET_SCENE.instantiate() as CatTarget
 		animal_entity.position = grid_to_world(animal_pos)
 		entities_container.add_child(animal_entity)
-		animal_entity.setup("Mia")
+		animal_entity.setup(target_animal_name)
 
 func _animate_food_pulse() -> void:
 	if not food_sprite:
@@ -150,7 +152,7 @@ func is_valid_cell(pos: Vector2i) -> bool:
 	return pos.x >= 0 and pos.x < grid_width and pos.y >= 0 and pos.y < grid_height
 
 func is_obstacle(pos: Vector2i) -> bool:
-	return pos in obstacles
+	return pos in obstacles or decorative_tiles.has(pos)
 
 func remove_food() -> void:
 	has_food = false

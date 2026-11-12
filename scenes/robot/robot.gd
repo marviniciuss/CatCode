@@ -139,6 +139,7 @@ func collect() -> void:
 	# Checa se o robô está na casa da ração/tigela e ainda não a pegou
 	if grid_pos == board_ref.food_pos and board_ref.has_food and not is_carrying_item:
 		is_carrying_item = true
+		AudioManager.play_collect_sfx()
 		board_ref.remove_food()
 		if sfx_collect:
 			sfx_collect.play()

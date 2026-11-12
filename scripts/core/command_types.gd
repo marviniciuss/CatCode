@@ -7,6 +7,7 @@ const TURN_RIGHT = "TURN_RIGHT"
 const COLLECT = "COLLECT"
 const FEED = "FEED"
 const LOOP = "LOOP"
+const LOOP_END = "LOOP_END"
 
 const COMMAND_METADATA = {
 	MOVE_FORWARD: {
@@ -36,22 +37,51 @@ const COMMAND_METADATA = {
 	},
 	LOOP: {
 		"title": "REPETIR (  )",
-		"color": Color("#2bd4f7"), # Ciano / Azul claro
-		"description": "Repete os comandos selecionados."
+		"color": Color("#14a3c7"), # Ciano escuro / Azul turquesa
+		"description": "Abre ou fecha um bloco que repete os comandos internos N vezes."
+	},
+	LOOP_END: {
+		"title": "└ FIM REPETIR",
+		"color": Color("#0e7c98"), # Ciano mais escuro para fechamento
+		"description": "Marca o fim do bloco de repetição."
 	}
 }
 
+static func is_loop_start(cmd: String) -> bool:
+	return cmd == LOOP or cmd.begins_with("LOOP:")
+
+static func get_loop_count(cmd: String) -> int:
+	if cmd.begins_with("LOOP:"):
+		var parts = cmd.split(":")
+		if parts.size() > 1 and parts[1].is_valid_int():
+			return clampi(parts[1].to_int(), 2, 9)
+	return 3
+
+static func make_loop_cmd(count: int) -> String:
+	return "LOOP:%d" % clampi(count, 2, 9)
+
+static func get_base_type(cmd: String) -> String:
+	if is_loop_start(cmd):
+		return LOOP
+	return cmd
+
 static func get_title(cmd: String) -> String:
+	if is_loop_start(cmd):
+		if cmd.begins_with("LOOP:"):
+			return "┌ REPETIR"
+		return COMMAND_METADATA[LOOP]["title"]
 	if COMMAND_METADATA.has(cmd):
 		return COMMAND_METADATA[cmd]["title"]
 	return cmd
 
 static func get_color(cmd: String) -> Color:
-	if COMMAND_METADATA.has(cmd):
-		return COMMAND_METADATA[cmd]["color"]
+	var base = get_base_type(cmd)
+	if COMMAND_METADATA.has(base):
+		return COMMAND_METADATA[base]["color"]
 	return Color.WHITE
 
 static func get_description(cmd: String) -> String:
-	if COMMAND_METADATA.has(cmd):
-		return COMMAND_METADATA[cmd]["description"]
+	var base = get_base_type(cmd)
+	if COMMAND_METADATA.has(base):
+		return COMMAND_METADATA[base]["description"]
 	return ""
