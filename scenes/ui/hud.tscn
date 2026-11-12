@@ -257,13 +257,13 @@ text = "↺ Reiniciar"
 
 [node name="SpeedButton" type="Button" parent="BottomControls" unique_id=1129269745]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(48, 38)
+custom_minimum_size = Vector2(56, 38)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_colors/font_color = Color(0.23, 0.03, 0.39, 1)
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_ctrl_btn")
-text = ".2X"
+text = "1X"
 
 [node name="RunButton" type="Button" parent="BottomControls" unique_id=4141379]
 unique_name_in_owner = true

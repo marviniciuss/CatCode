@@ -15,6 +15,7 @@ var cancel_execution: bool = false
 var execution_speed: float = 1.0
 
 func _ready() -> void:
+	Engine.time_scale = 1.0
 	AudioManager.play_match_music()
 	_connect_hud_signals()
 	levels = LevelData.get_default_levels()
@@ -25,6 +26,7 @@ func _connect_hud_signals() -> void:
 	hud.command_added.connect(_on_command_added)
 	hud.command_removed.connect(_on_command_removed)
 	hud.loop_count_changed.connect(_on_loop_count_changed)
+	hud.if_condition_toggled.connect(_on_if_condition_toggled)
 	hud.program_cleared.connect(_on_program_cleared)
 	hud.run_requested.connect(_on_run_requested)
 	hud.reset_requested.connect(_on_reset_requested)
@@ -72,6 +74,8 @@ func _on_command_added(cmd: String) -> void:
 			program_commands.append(CommandTypes.LOOP_END)
 		else:
 			program_commands.append(CommandTypes.make_loop_cmd(3))
+	elif cmd == CommandTypes.IF_COND:
+		program_commands.append(CommandTypes.make_if_cmd(CommandTypes.COND_OBSTACLE_AHEAD))
 	else:
 		program_commands.append(cmd)
 		
@@ -81,6 +85,12 @@ func _on_loop_count_changed(index: int, new_count: int) -> void:
 	if index >= 0 and index < program_commands.size():
 		if CommandTypes.is_loop_start(program_commands[index]):
 			program_commands[index] = CommandTypes.make_loop_cmd(new_count)
+			hud.update_program_display(program_commands)
+
+func _on_if_condition_toggled(index: int, next_cond: String) -> void:
+	if index >= 0 and index < program_commands.size():
+		if CommandTypes.is_if_cmd(program_commands[index]):
+			program_commands[index] = CommandTypes.make_if_cmd(next_cond)
 			hud.update_program_display(program_commands)
 
 func _on_command_removed(index: int) -> void:
@@ -130,6 +140,15 @@ func _on_reset_requested() -> void:
 	is_executing = false
 	hud.set_running_state(false)
 	_reset_board_and_robot()
+
+func _evaluate_if_condition(cond: String) -> bool:
+	match cond:
+		CommandTypes.COND_OBSTACLE_AHEAD:
+			var front_pos = robot.grid_pos + robot.facing_dir
+			return (not board.is_valid_cell(front_pos)) or board.is_obstacle(front_pos)
+		CommandTypes.COND_ON_FOOD:
+			return (robot.grid_pos == board.food_pos) and board.has_food and (not robot.is_carrying_item)
+	return false
 
 func _execute_single_action(cmd: String) -> Dictionary:
 	var action_result: Dictionary = { "success": true }
@@ -183,10 +202,21 @@ func _execute_program() -> void:
 				for rep in range(1, repeat_count + 1):
 					if cancel_execution or board.is_animal_fed:
 						break
-					for inner_idx in range(i + 1, end_idx):
+					var inner_idx: int = i + 1
+					while inner_idx < end_idx:
 						if cancel_execution:
 							break
 						var inner_cmd = program_commands[inner_idx]
+						if CommandTypes.is_if_cmd(inner_cmd):
+							hud.highlight_command(inner_idx, i, rep, repeat_count)
+							await get_tree().create_timer(0.12).timeout
+							var cond_met = _evaluate_if_condition(CommandTypes.get_if_condition(inner_cmd))
+							if cond_met:
+								inner_idx += 1
+							else:
+								inner_idx += 2
+							continue
+						
 						hud.highlight_command(inner_idx, i, rep, repeat_count)
 						var loop_res = await _execute_single_action(inner_cmd)
 						
@@ -201,6 +231,7 @@ func _execute_program() -> void:
 							break
 						
 						await get_tree().create_timer(0.15).timeout
+						inner_idx += 1
 			
 			if board.is_animal_fed:
 				break
@@ -208,6 +239,15 @@ func _execute_program() -> void:
 			continue
 		elif cmd == CommandTypes.LOOP_END:
 			i += 1
+			continue
+		elif CommandTypes.is_if_cmd(cmd):
+			hud.highlight_command(i)
+			await get_tree().create_timer(0.12).timeout
+			var top_cond_met = _evaluate_if_condition(CommandTypes.get_if_condition(cmd))
+			if top_cond_met:
+				i += 1
+			else:
+				i += 2
 			continue
 		
 		hud.highlight_command(i)

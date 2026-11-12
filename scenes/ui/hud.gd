@@ -4,6 +4,7 @@ extends Control
 signal command_added(cmd: String)
 signal command_removed(index: int)
 signal loop_count_changed(index: int, new_count: int)
+signal if_condition_toggled(index: int, next_cond: String)
 signal program_cleared
 signal run_requested
 signal reset_requested
@@ -43,9 +44,11 @@ var _is_running: bool = false
 var _max_commands: int = 24
 var _current_speed_index: int = 1
 var _speeds = [0.5, 1.0, 2.0]
-var _speed_labels = [".5X", "1X", "2X"]
+var _speed_labels = ["0.5X", "1X", "2X"]
 
 func _ready() -> void:
+	if speed_button:
+		speed_button.text = _speed_labels[_current_speed_index]
 	UISounds.register_buttons(self)
 
 func setup_level(data: LevelData) -> void:
@@ -71,6 +74,7 @@ func setup_palette(allowed_commands: Array) -> void:
 		CommandTypes.TURN_RIGHT,
 		CommandTypes.COLLECT,
 		CommandTypes.LOOP,
+		CommandTypes.IF_COND,
 		CommandTypes.FEED
 	]
 	
@@ -103,25 +107,34 @@ func update_program_display(commands: Array) -> void:
 			open_loop_index = -1
 	
 	var in_loop: bool = false
+	var after_if: bool = false
 	for i in range(commands.size()):
 		var cmd_str = str(commands[i])
 		var item = COMMAND_ITEM_SCENE.instantiate() as CommandItem
 		program_list.add_child(item)
-		UISounds.register_buttons(item)
-		item.setup(i, str(commands[i]))
 		
 		if CommandTypes.is_loop_start(cmd_str):
+			after_if = false
 			var is_open = (i == open_loop_index)
-			item.setup(i, cmd_str, 0, is_open)
+			item.setup(i, cmd_str, 0, is_open, false)
 			in_loop = true
 		elif cmd_str == CommandTypes.LOOP_END:
+			after_if = false
 			in_loop = false
-			item.setup(i, cmd_str, 0, false)
+			item.setup(i, cmd_str, 0, false, false)
+		elif CommandTypes.is_if_cmd(cmd_str):
+			var ind = 1 if in_loop else 0
+			item.setup(i, cmd_str, ind, false, false)
+			after_if = true
 		else:
-			item.setup(i, cmd_str, 1 if in_loop else 0, false)
+			var ind = (1 if in_loop else 0) + (1 if after_if else 0)
+			item.setup(i, cmd_str, ind, false, after_if)
+			after_if = false
 		
+		UISounds.register_buttons(item)
 		item.delete_requested.connect(_on_item_delete_requested)
 		item.loop_count_changed.connect(_on_item_loop_count_changed)
+		item.if_condition_toggled.connect(_on_item_if_condition_toggled)
 		item.close_loop_requested.connect(_on_close_loop_requested)
 		_command_items.append(item)
 	
@@ -211,6 +224,10 @@ func _on_item_delete_requested(index: int) -> void:
 func _on_item_loop_count_changed(index: int, new_count: int) -> void:
 	if not _is_running:
 		loop_count_changed.emit(index, new_count)
+
+func _on_item_if_condition_toggled(index: int, next_cond: String) -> void:
+	if not _is_running:
+		if_condition_toggled.emit(index, next_cond)
 
 func _on_close_loop_requested() -> void:
 	if not _is_running:
