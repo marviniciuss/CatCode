@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://d1cattarget001"]
+[gd_scene load_steps=4 format=3 uid="uid://d1cattarget001"]
 
 [ext_resource type="Script" path="res://scenes/entities/cat_target.gd" id="1_cat_target"]
 [ext_resource type="Texture2D" path="res://assets/sprites/cutouts/cat_mia.png" id="2_cat_mia"]
+[ext_resource type="AudioStream" path="res://assets/sounds/meow.ogg" id="3_meow"]
 
 [node name="CatTarget" type="Node2D"]
 z_index = 5
@@ -27,3 +28,6 @@ theme_override_font_sizes/font_size = 32
 text = "❤️"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MeowPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_meow")

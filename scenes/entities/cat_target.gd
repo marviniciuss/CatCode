@@ -3,6 +3,7 @@ extends Node2D
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var heart_label: Label = $HeartLabel
+@onready var meow_player: AudioStreamPlayer = $MeowPlayer
 
 var is_fed: bool = false
 var animal_name: String = "Mia"
@@ -36,6 +37,8 @@ func _start_idle_breathing() -> void:
 
 func on_fed() -> void:
 	is_fed = true
+	if meow_player:
+		meow_player.play()
 	if heart_label:
 		heart_label.visible = true
 		heart_label.modulate.a = 0.0

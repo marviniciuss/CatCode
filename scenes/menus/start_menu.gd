@@ -7,6 +7,7 @@ extends Control
 @onready var close_help_button: Button = %CloseHelpButton
 
 func _ready() -> void:
+	UISounds.register_buttons(self)
 	AudioManager.play_theme_music()
 	if how_to_play_modal:
 		how_to_play_modal.visible = false

@@ -44,6 +44,9 @@ var _current_speed_index: int = 1
 var _speeds = [0.5, 1.0, 2.0]
 var _speed_labels = [".5X", "1X", "2X"]
 
+func _ready() -> void:
+	UISounds.register_buttons(self)
+
 func setup_level(data: LevelData) -> void:
 	mission_prompt_label.text = data.mission_text
 	_max_commands = data.max_commands
@@ -71,6 +74,7 @@ func setup_palette(allowed_commands: Array) -> void:
 	for cmd in display_order:
 		var btn = PALETTE_BUTTON_SCENE.instantiate() as PaletteButton
 		palette_grid.add_child(btn)
+		UISounds.register_buttons(btn)
 		btn.setup(str(cmd))
 		if cmd == CommandTypes.LOOP:
 			_loop_palette_btn = btn
@@ -100,6 +104,8 @@ func update_program_display(commands: Array) -> void:
 		var cmd_str = str(commands[i])
 		var item = COMMAND_ITEM_SCENE.instantiate() as CommandItem
 		program_list.add_child(item)
+		UISounds.register_buttons(item)
+		item.setup(i, str(commands[i]))
 		
 		if CommandTypes.is_loop_start(cmd_str):
 			var is_open = (i == open_loop_index)
