@@ -8,6 +8,10 @@ const COLLECT = "COLLECT"
 const FEED = "FEED"
 const LOOP = "LOOP"
 const LOOP_END = "LOOP_END"
+const IF_COND = "IF_COND"
+
+const COND_OBSTACLE_AHEAD = "OBSTACLE"
+const COND_ON_FOOD = "ON_FOOD"
 
 const COMMAND_METADATA = {
 	MOVE_FORWARD: {
@@ -44,6 +48,11 @@ const COMMAND_METADATA = {
 		"title": "└ FIM REPETIR",
 		"color": Color("#0e7c98"), # Ciano mais escuro para fechamento
 		"description": "Marca o fim do bloco de repetição."
+	},
+	IF_COND: {
+		"title": "SE ( ? )",
+		"color": Color("#e67e22"), # Laranja / Âmbar
+		"description": "Executa o próximo comando apenas se a condição escolhida for verdadeira."
 	}
 }
 
@@ -60,9 +69,31 @@ static func get_loop_count(cmd: String) -> int:
 static func make_loop_cmd(count: int) -> String:
 	return "LOOP:%d" % clampi(count, 2, 9)
 
+static func is_if_cmd(cmd: String) -> bool:
+	return cmd == IF_COND or cmd.begins_with("IF:")
+
+static func get_if_condition(cmd: String) -> String:
+	if cmd.begins_with("IF:"):
+		var parts = cmd.split(":")
+		if parts.size() > 1 and not parts[1].is_empty():
+			return parts[1]
+	return COND_OBSTACLE_AHEAD
+
+static func make_if_cmd(cond: String) -> String:
+	return "IF:%s" % cond
+
+static func get_condition_label(cond: String) -> String:
+	match cond:
+		COND_ON_FOOD:
+			return "Sobre Ração ▾"
+		_:
+			return "Obstáculo ▾"
+
 static func get_base_type(cmd: String) -> String:
 	if is_loop_start(cmd):
 		return LOOP
+	if is_if_cmd(cmd):
+		return IF_COND
 	return cmd
 
 static func get_title(cmd: String) -> String:
@@ -70,6 +101,10 @@ static func get_title(cmd: String) -> String:
 		if cmd.begins_with("LOOP:"):
 			return "┌ REPETIR"
 		return COMMAND_METADATA[LOOP]["title"]
+	if is_if_cmd(cmd):
+		if cmd.begins_with("IF:"):
+			return "SE"
+		return COMMAND_METADATA[IF_COND]["title"]
 	if COMMAND_METADATA.has(cmd):
 		return COMMAND_METADATA[cmd]["title"]
 	return cmd

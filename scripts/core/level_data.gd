@@ -222,5 +222,82 @@ static func get_default_levels() -> Array[LevelData]:
 
 	l5.max_commands = 12
 	levels.append(l5)
+
+	# --- FASE 6: Cenário 2 (Tomada de Decisão - Introdução ao Bloco SE) ---
+	var l6 = LevelData.new()
+	l6.level_id = "c2_l3"
+	l6.level_number = 6
+	l6.scenario_name = "Cenário 2 — Decisões Inteligentes"
+	l6.target_animal_name = "Luna"
+	l6.difficulty = "Difícil"
+	l6.title = "Fase 6: O Corredor Inteligente"
+	l6.mission_text = "Use o bloco SE dentro do REPETIR! Se estiver sobre a ração, colete; se houver obstáculo à frente, vire à direita até chegar na Luna."
+	l6.grid_width = 6
+	l6.grid_height = 6
+	l6.robot_start_pos = Vector2i(1, 0)
+	l6.robot_start_dir = Vector2i(1, 0) # Direita
+	l6.food_pos = Vector2i(2, 0)
+	l6.animal_pos = Vector2i(3, 2)
+	l6.obstacles = [
+		Vector2i(0, 0), Vector2i(5, 0),
+		Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1), Vector2i(5, 1),
+		Vector2i(0, 2), Vector2i(1, 2), Vector2i(2, 2), Vector2i(5, 2),
+		Vector2i(0, 3), Vector2i(1, 3), Vector2i(2, 3), Vector2i(3, 3), Vector2i(5, 3),
+		Vector2i(0, 4), Vector2i(1, 4), Vector2i(2, 4), Vector2i(3, 4), Vector2i(4, 4), Vector2i(5, 4),
+		Vector2i(0, 5), Vector2i(1, 5), Vector2i(2, 5), Vector2i(3, 5), Vector2i(4, 5), Vector2i(5, 5)
+	]
+	l6.decorative_tiles = {
+		Vector2i(4, 3): "stone"
+	}
+	l6.allowed_commands = [
+		CommandTypes.MOVE_FORWARD,
+		CommandTypes.TURN_LEFT,
+		CommandTypes.TURN_RIGHT,
+		CommandTypes.COLLECT,
+		CommandTypes.LOOP,
+		CommandTypes.IF_COND,
+		CommandTypes.FEED
+	]
+	l6.max_commands = 9
+	levels.append(l6)
+
+	# --- FASE 7: Cenário 3 (Caminho em "S" - Combinando Laços e Condicionais) ---
+	var l7 = LevelData.new()
+	l7.level_id = "c3_l1"
+	l7.level_number = 7
+	l7.scenario_name = "Cenário 3 — Desafio de Lógica"
+	l7.target_animal_name = "Luna"
+	l7.difficulty = "Difícil"
+	l7.title = "Fase 7: A Serpentina da Luna"
+	l7.mission_text = "O caminho faz curvas para lados opostos! Combine dois blocos REPETIR com o SE para buscar a ração e chegar até a Luna."
+	l7.grid_width = 6
+	l7.grid_height = 6
+	l7.robot_start_pos = Vector2i(0, 0)
+	l7.robot_start_dir = Vector2i(1, 0) # Direita
+	l7.food_pos = Vector2i(2, 2)
+	l7.animal_pos = Vector2i(3, 4)
+	l7.obstacles = [
+		Vector2i(4, 0), Vector2i(5, 0),
+		Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1), Vector2i(4, 1), Vector2i(5, 1),
+		Vector2i(4, 2), Vector2i(5, 2),
+		Vector2i(0, 3), Vector2i(2, 3), Vector2i(3, 3), Vector2i(4, 3), Vector2i(5, 3),
+		Vector2i(0, 4), Vector2i(4, 4), Vector2i(5, 4),
+		Vector2i(0, 5), Vector2i(2, 5), Vector2i(3, 5), Vector2i(4, 5), Vector2i(5, 5)
+	]
+	l7.decorative_tiles = {
+		Vector2i(0, 2): "stone",
+		Vector2i(1, 5): "stone"
+	}
+	l7.allowed_commands = [
+		CommandTypes.MOVE_FORWARD,
+		CommandTypes.TURN_LEFT,
+		CommandTypes.TURN_RIGHT,
+		CommandTypes.COLLECT,
+		CommandTypes.LOOP,
+		CommandTypes.IF_COND,
+		CommandTypes.FEED
+	]
+	l7.max_commands = 14
+	levels.append(l7)
 	
 	return levels
