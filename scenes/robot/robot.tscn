@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dqvf5i30v7flf" path="res://scenes/robot/robot.gd" id="1_robot"]
 [ext_resource type="Texture2D" uid="uid://cy34m3mg5hedk" path="res://assets/sprites/cutouts/robot_down.png" id="2_robot_down"]
+[ext_resource type="AudioStream" uid="uid://b5gbmheyo5jks" path="res://assets/sounds/177938__erikh2000__spogey-robot-walk.wav" id="3_weiqw"]
+[ext_resource type="AudioStream" path="res://assets/sounds/colect.wav" id="4_collect"]
+[ext_resource type="AudioStream" path="res://assets/sounds/breaking.wav" id="5_breaking"]
 
 [node name="Robot" type="Node2D" unique_id=391650841]
 z_index = 10
@@ -14,3 +17,12 @@ texture = ExtResource("2_robot_down")
 visible = false
 position = Vector2(40, -45)
 scale = Vector2(0.28, 0.28)
+
+[node name="sfx_walk" type="AudioStreamPlayer" parent="." unique_id=642384415]
+stream = ExtResource("3_weiqw")
+
+[node name="sfx_collect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_collect")
+
+[node name="sfx_breaking" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_breaking")

@@ -5,6 +5,9 @@ signal action_finished(result: Dictionary)
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var item_badge: Sprite2D = $ItemBadge
+@onready var sfx_walk: AudioStreamPlayer = $sfx_walk
+@onready var sfx_collect: AudioStreamPlayer = $sfx_collect
+@onready var sfx_breaking: AudioStreamPlayer = $sfx_breaking
 
 var grid_pos: Vector2i = Vector2i.ZERO
 var facing_dir: Vector2i = Vector2i.RIGHT
@@ -95,11 +98,15 @@ func move_forward() -> void:
 		return
 	
 	if not board_ref.is_valid_cell(next_pos):
+		if sfx_breaking:
+			sfx_breaking.play()
 		await _play_bump_animation()
 		action_finished.emit({ "action": "move", "success": false, "reason": "bump_edge", "pos": next_pos })
 		return
 		
 	if board_ref.is_obstacle(next_pos):
+		if sfx_breaking:
+			sfx_breaking.play()
 		await _play_bump_animation()
 		action_finished.emit({ "action": "move", "success": false, "reason": "bump_obstacle", "pos": next_pos })
 		return
@@ -107,6 +114,9 @@ func move_forward() -> void:
 	# Movimento válido para a próxima casa
 	grid_pos = next_pos
 	var target_world = board_ref.grid_to_world(grid_pos)
+	
+	if sfx_walk:
+		sfx_walk.play()
 	
 	var tween = create_tween().set_parallel(true)
 	tween.tween_property(self, "position", target_world, 0.28).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
@@ -117,6 +127,8 @@ func move_forward() -> void:
 	anim_tween.tween_property(self, "scale", BASE_SCALE, 0.14)
 	
 	await tween.finished
+	if sfx_walk and sfx_walk.playing:
+		sfx_walk.stop()
 	action_finished.emit({ "action": "move", "success": true, "pos": grid_pos })
 
 func collect() -> void:
@@ -128,6 +140,8 @@ func collect() -> void:
 	if grid_pos == board_ref.food_pos and board_ref.has_food and not is_carrying_item:
 		is_carrying_item = true
 		board_ref.remove_food()
+		if sfx_collect:
+			sfx_collect.play()
 		
 		if item_badge:
 			item_badge.visible = true
