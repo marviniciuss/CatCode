@@ -5,6 +5,7 @@ extends Control
 @onready var levels_grid: GridContainer = %LevelsGrid
 
 func _ready() -> void:
+	AudioManager.play_theme_music()
 	_setup_level_buttons()
 
 func _setup_level_buttons() -> void:

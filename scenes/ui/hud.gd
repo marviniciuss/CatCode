@@ -167,6 +167,7 @@ func show_victory(step_count: int, is_last_level: bool = false) -> void:
 		next_level_btn.text = "Concluir"
 
 func show_failure(reason: String) -> void:
+	AudioManager.play_game_over_sfx()
 	failure_modal.visible = true
 	match reason:
 		"bump_edge":

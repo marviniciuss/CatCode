@@ -15,6 +15,7 @@ var cancel_execution: bool = false
 var execution_speed: float = 1.0
 
 func _ready() -> void:
+	AudioManager.play_match_music()
 	_connect_hud_signals()
 	levels = LevelData.get_default_levels()
 	var start_index = clampi(LevelData.selected_level_index, 0, levels.size() - 1)
@@ -118,6 +119,7 @@ func _on_run_requested() -> void:
 	_execute_program()
 
 func _reset_board_and_robot() -> void:
+	AudioManager.play_match_music()
 	var current_level = levels[current_level_index]
 	board.reset_board_state()
 	robot.setup(current_level.robot_start_pos, current_level.robot_start_dir, board)
