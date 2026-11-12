@@ -62,6 +62,7 @@ func setup_level(data: LevelData) -> void:
 	
 	build_grid()
 	reset_board_state()
+	
 
 func reset_board_state() -> void:
 	has_food = true

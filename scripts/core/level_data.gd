@@ -170,5 +170,57 @@ static func get_default_levels() -> Array[LevelData]:
 	]
 	l4.max_commands = 20
 	levels.append(l4)
+	
+		# --- FASE 5: A Escadinha do Bento ---
+	var l5 = LevelData.new()
+	l5.level_id = "c2_l2"
+	l5.level_number = 5
+	l5.scenario_name = "Cenário 2 — Exploração com Laços"
+	l5.target_animal_name = "Bento"
+	l5.difficulty = "Difícil"
+	l5.title = "Fase 5: A Escadinha do Bento"
+	l5.mission_text = "Pegue a ração e leve até o Bento! Descubra o padrão da escada e use REPETIR. Você tem até 12 blocos."
 
+	l5.grid_width = 6
+	l5.grid_height = 6
+
+	l5.robot_start_pos = Vector2i(0, 5)
+	l5.robot_start_dir = Vector2i(1, 0)
+	l5.food_pos = Vector2i(4, 1)
+	l5.animal_pos = Vector2i(5, 0)
+
+	l5.obstacles = [
+		Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0),
+		Vector2i(3, 0), Vector2i(4, 0),
+
+		Vector2i(0, 1), Vector2i(1, 1),
+		Vector2i(2, 1), Vector2i(3, 1),
+
+		Vector2i(0, 2), Vector2i(1, 2),
+		Vector2i(2, 2), Vector2i(5, 2),
+
+		Vector2i(0, 3), Vector2i(1, 3),
+		Vector2i(4, 3), Vector2i(5, 3),
+
+		Vector2i(0, 4), Vector2i(3, 4),
+		Vector2i(4, 4), Vector2i(5, 4),
+
+		Vector2i(2, 5), Vector2i(3, 5),
+		Vector2i(4, 5), Vector2i(5, 5)
+	]
+
+	l5.decorative_tiles = {}
+
+	l5.allowed_commands = [
+		CommandTypes.MOVE_FORWARD,
+		CommandTypes.TURN_LEFT,
+		CommandTypes.TURN_RIGHT,
+		CommandTypes.COLLECT,
+		CommandTypes.LOOP,
+		CommandTypes.FEED
+	]
+
+	l5.max_commands = 12
+	levels.append(l5)
+	
 	return levels

@@ -1,10 +1,22 @@
 class_name LevelSelectMenu
 extends Control
 
+# true: mostra o botão de testes.
+# false: mantém apenas o desbloqueio normal das fases.
+const MODO_TESTE: bool = true
+
 @onready var back_button: Button = %BackButton
 @onready var levels_grid: GridContainer = %LevelsGrid
 
 func _ready() -> void:
+	if OS.is_debug_build() and MODO_TESTE:
+		var unlock_button = Button.new()
+		unlock_button.text = "Desbloquear fases (teste)"
+		unlock_button.position = Vector2(24, 620)
+		unlock_button.custom_minimum_size = Vector2(280, 50)
+		add_child(unlock_button)
+		unlock_button.pressed.connect(_on_unlock_all_pressed)
+	
 	UISounds.register_buttons(self)
 	AudioManager.play_theme_music()
 	_setup_level_buttons()
@@ -87,3 +99,7 @@ func _on_level_selected(level_num: int) -> void:
 
 func _on_back_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/menus/start_menu.tscn")
+
+func _on_unlock_all_pressed() -> void:
+	LevelData.max_unlocked_level = LevelData.get_default_levels().size()
+	get_tree().reload_current_scene()

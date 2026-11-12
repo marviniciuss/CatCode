@@ -21,6 +21,7 @@ signal speed_changed(multiplier: float)
 @onready var clear_button: Button = %ClearButton
 @onready var speed_button: Button = %SpeedButton
 @onready var back_button: Button = %BackButton
+@onready var level_title_label: Label = $WorldSide/LevelTitleLabel
 
 # Modal de Vitória
 @onready var victory_modal: Control = %VictoryModal
@@ -48,12 +49,14 @@ func _ready() -> void:
 	UISounds.register_buttons(self)
 
 func setup_level(data: LevelData) -> void:
+	level_title_label.text = data.title
 	mission_prompt_label.text = data.mission_text
 	_max_commands = data.max_commands
 	
 	setup_palette(data.allowed_commands)
 	hide_modals()
 	set_running_state(false)
+	
 
 func setup_palette(allowed_commands: Array) -> void:
 	_allowed_commands = allowed_commands.duplicate()
