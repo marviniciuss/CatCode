@@ -40,6 +40,18 @@ func _init() -> void:
 		CommandTypes.COLLECT,
 		CommandTypes.FEED
 	]
+	
+static func _walls_around(path: Array, w: int, h: int) -> Array:
+	var walls: Array = []
+	for p in path:
+		for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+			var n: Vector2i = p + d
+			if n.x < 0 or n.y < 0 or n.x >= w or n.y >= h:
+				continue
+			if n in path or n in walls:
+				continue
+			walls.append(n)
+	return walls
 
 static func get_default_levels() -> Array[LevelData]:
 	var levels: Array[LevelData] = []
@@ -299,5 +311,104 @@ static func get_default_levels() -> Array[LevelData]:
 	]
 	l7.max_commands = 14
 	levels.append(l7)
+	
+	var l8 = LevelData.new()
+	l8.level_id = "c3_l2"
+	l8.level_number = 8
+	l8.scenario_name = "Cenário 3 — Desafio de Lógica"
+	l8.target_animal_name = "Mia"
+	l8.difficulty = "Difícil"
+	l8.title = "Fase 8: O Beco da Mia"
+	l8.mission_text = "A ração está num beco sem saída! Use SE / SENÃO dentro do REPETIR: se houver obstáculo, vire à direita; senão, ande. Colete a ração e leve até a Mia."
+	l8.grid_width = 6
+	l8.grid_height = 6
+	var path8 = [Vector2i(2, 1), Vector2i(2, 2), Vector2i(2, 3), Vector2i(3, 1)]
+	l8.robot_start_pos = Vector2i(2, 1)
+	l8.robot_start_dir = Vector2i(0, 1) 
+	l8.food_pos = Vector2i(2, 3)
+	l8.animal_pos = Vector2i(3, 1)
+	l8.obstacles = _walls_around(path8, 6, 6)
+	l8.decorative_tiles = {}
+	l8.allowed_commands = [
+		CommandTypes.MOVE_FORWARD,
+		CommandTypes.TURN_LEFT,
+		CommandTypes.TURN_RIGHT,
+		CommandTypes.COLLECT,
+		CommandTypes.LOOP,
+		CommandTypes.IF_COND,
+		CommandTypes.ELSE,
+		CommandTypes.FEED
+	]
+	l8.max_commands = 9
+	levels.append(l8)
+
+	var l9 = LevelData.new()
+	l9.level_id = "c3_l3"
+	l9.level_number = 9
+	l9.scenario_name = "Cenário 3 — Desafio de Lógica"
+	l9.target_animal_name = "Bento"
+	l9.difficulty = "Difícil"
+	l9.title = "Fase 9: O Caminho do Bento"
+	l9.mission_text = "O caminho tem curvas, e o robô precisa reagir ao que encontra! Use ESCOLHA com vários CASOS: coletar a ração, virar quando houver obstáculo e andar nos outros casos. Atenção: a ordem dos casos importa!"
+	l9.grid_width = 6
+	l9.grid_height = 6
+	var path9 = [
+		Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0),
+		Vector2i(4, 1), Vector2i(4, 2), Vector2i(4, 3),
+		Vector2i(3, 3), Vector2i(2, 3), Vector2i(1, 3),
+		Vector2i(1, 2)
+	]
+	l9.robot_start_pos = Vector2i(0, 0)
+	l9.robot_start_dir = Vector2i(1, 0) 
+	l9.food_pos = Vector2i(4, 2)
+	l9.animal_pos = Vector2i(1, 2)
+	l9.obstacles = _walls_around(path9, 6, 6)
+	l9.decorative_tiles = {}
+	l9.allowed_commands = [
+		CommandTypes.MOVE_FORWARD,
+		CommandTypes.TURN_LEFT,
+		CommandTypes.TURN_RIGHT,
+		CommandTypes.COLLECT,
+		CommandTypes.LOOP,
+		CommandTypes.UNTIL,
+		CommandTypes.SWITCH,
+		CommandTypes.CASE,
+		CommandTypes.FEED
+	]
+	l9.max_commands = 10
+	levels.append(l9)
+
+	var l10 = LevelData.new()
+	l10.level_id = "c3_l4"
+	l10.level_number = 10
+	l10.scenario_name = "Cenário 3 — Desafio de Lógica"
+	l10.target_animal_name = "Luna"
+	l10.difficulty = "Difícil"
+	l10.title = "Fase 10: Os Degraus da Luna"
+	l10.mission_text = "Os degraus se repetem, mas com trechos retos entre eles! Ensine uma manobra ao robô com DEFINIR e use CHAMAR sempre que precisar."
+	l10.grid_width = 6
+	l10.grid_height = 6
+	var path10 = [
+		Vector2i(0, 0), Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1),
+		Vector2i(3, 2), Vector2i(4, 2), Vector2i(4, 3), Vector2i(5, 3)
+	]
+	l10.robot_start_pos = Vector2i(0, 0)
+	l10.robot_start_dir = Vector2i(1, 0) 
+	l10.food_pos = Vector2i(3, 1)
+	l10.animal_pos = Vector2i(5, 3)
+	l10.obstacles = _walls_around(path10, 6, 6)
+	l10.decorative_tiles = {}
+	l10.allowed_commands = [
+		CommandTypes.MOVE_FORWARD,
+		CommandTypes.TURN_LEFT,
+		CommandTypes.TURN_RIGHT,
+		CommandTypes.COLLECT,
+		CommandTypes.LOOP,
+		CommandTypes.FUNC_DEF,
+		CommandTypes.FUNC_CALL,
+		CommandTypes.FEED
+	]
+	l10.max_commands = 13
+	levels.append(l10)
 	
 	return levels

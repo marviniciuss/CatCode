@@ -31,6 +31,12 @@ func setup(start_pos: Vector2i, start_dir: Vector2i, board: Node) -> void:
 	_initial_pos = start_pos
 	_initial_dir = start_dir
 	reset_to_start()
+	
+func is_blocked_ahead() -> bool:
+	if not board_ref:
+		return true
+	var next_pos = grid_pos + facing_dir
+	return not board_ref.is_valid_cell(next_pos) or board_ref.is_obstacle(next_pos)
 
 func reset_to_start() -> void:
 	grid_pos = _initial_pos
